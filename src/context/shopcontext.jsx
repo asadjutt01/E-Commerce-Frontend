@@ -18,25 +18,30 @@ const ShopContextprovider = (props) => {
     const [all_product, setall_product] = useState([]);
     const [cartItem, setcartItem] = useState(getdefaultcart)
 
-    useEffect(() => {
-        fetch("https://e-commerce-backend-9gkclwdt1-asad-nadeems-projects.vercel.app/allproduct", {
+
+    const fetchdata = async () => {
+        await fetch("https://e-commerce-complete-nine.vercel.app/allproduct", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
             }
         }).then((res) => res.json()).then((data) => { setall_product(data) })
+    }
+    useEffect(() => {
+        
+        fetchdata();
 
 
         if (localStorage.getItem('auth-token')) {
-            fetch("https://e-commerce-backend-9gkclwdt1-asad-nadeems-projects.vercel.app/getcart", {
+            fetch("https://e-commerce-complete-nine.vercel.app/getcart", {
                 method: "POST",
                 headers: {
                     Accept: 'application/json',
                     'auth-token': `${localStorage.getItem('auth-token')}`,
                     "Content-Type": "application/json"
                 },
-                body:''
-            }).then((res) => res.json()).then((data) => setcartItem(data) )
+                body: ''
+            }).then((res) => res.json()).then((data) => setcartItem(data))
         }
 
     }, [])
@@ -47,7 +52,7 @@ const ShopContextprovider = (props) => {
     const addtocart = (ItemId) => {
         setcartItem((prev) => ({ ...prev, [ItemId]: prev[ItemId] + 1 }))
         if (localStorage.getItem('auth-token')) {
-            fetch("https://e-commerce-backend-9gkclwdt1-asad-nadeems-projects.vercel.app/addtocart", {
+            fetch("https://e-commerce-complete-nine.vercel.app/addtocart", {
                 method: "POST",
                 headers: {
                     Accept: 'application/json',
@@ -65,7 +70,7 @@ const ShopContextprovider = (props) => {
     const removefromcart = (ItemId) => {
         setcartItem((prev) => ({ ...prev, [ItemId]: prev[ItemId] - 1 }))
         if (localStorage.getItem('auth-token')) {
-            fetch("https://e-commerce-backend-9gkclwdt1-asad-nadeems-projects.vercel.app/removefromcart", {
+            fetch("https://e-commerce-complete-nine.vercel.app/removefromcart", {
                 method: "POST",
                 headers: {
                     Accept: 'application/json',

@@ -5,13 +5,18 @@ import Item from '../Item/Item'
 
 const NewCollections = () => {
     const [new_collections, setnew_collections] = useState([])
-    useEffect(() => {
-        fetch("https://e-commerce-backend-9gkclwdt1-asad-nadeems-projects.vercel.app/newcollection", {
+
+    const fetchdata = async()=>{
+        await fetch("https://e-commerce-complete-nine.vercel.app/newcollection", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
             }
           }).then((res) => res.json()).then((data) => { setnew_collections(data) })
+    }
+
+    useEffect(() => {
+        fetchdata();
     }, [])
 
     return (

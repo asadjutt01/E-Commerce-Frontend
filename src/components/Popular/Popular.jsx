@@ -6,13 +6,18 @@ import Item from '../Item/Item'
 const Popular = () => {
 
     const [popular_in_women, setpopular_in_women] = useState([])
-    useEffect(() => {
-        fetch("https://e-commerce-backend-9gkclwdt1-asad-nadeems-projects.vercel.app/popularinwomen", {
+
+    const fetchdata = async () => {
+        await  fetch("https://e-commerce-complete-nine.vercel.app/popularinwomen", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
             }
           }).then((res) => res.json()).then((data) => { setpopular_in_women(data) })
+    }
+
+    useEffect(() => {
+        fetchdata();
     }, [])
 
     return (
